@@ -30,55 +30,59 @@ const UserDiv = styled.div`
     border: 1px solid black;
   }
 `;
-export const Edit = () => {
+export const EditAddress = () => {
   const { id } = useParams();
-  console.log(id);
-  const [user, setUser] = useState({
-    name: "",
-    email: "",
-    address: "",
+  const [address, setAddress] = useState({
+    city: "",
+    country: "",
+    pincode: "",
   });
+
   const navigate = useNavigate();
 
   const [update, setUpdate] = useState(false);
 
   const inputHandler = (e) => {
     const { name, value } = e.target;
-    setUser({ ...user, [name]: value });
+    setAddress({ ...address, [name]: value });
   };
 
   return (
     <UserDiv>
       <div id="create">
-        <h1>Update user</h1>
+        <h1>Update Address</h1>
         <input
           type="text"
-          placeholder="Enter your name"
-          name="name"
+          placeholder="Enter your City name"
+          name="city"
           onChange={inputHandler}
         />
         <input
           type="text"
-          placeholder="Enter your email"
-          name="email"
+          placeholder="Enter your country Name"
+          name="country"
           onChange={inputHandler}
         />
         <input
           type="text"
-          placeholder="Enter your address"
-          name="address"
+          placeholder="Enter your pincode"
+          name="pincode"
           onChange={inputHandler}
         />
         <Button
           variant="contained"
           onClick={() => {
             axios
-              .patch(`http://localhost:3434/user/edit/${id}`, user)
-              .then(alert("user is updated "));
-            navigate("/user");
+              .post(
+                `http://localhost:3434/user/${id}/addresses/create`,
+                address
+              )
+              .then(alert("Address is created "))
+              .then(setUpdate(!update));
+            navigate("/addresses");
           }}
         >
-          Update User
+          Update Address
         </Button>
       </div>
     </UserDiv>

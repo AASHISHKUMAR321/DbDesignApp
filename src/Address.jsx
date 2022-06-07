@@ -4,8 +4,7 @@ import styled from "styled-components";
 import axios from "axios";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
-import { useNavigate } from "react-router-dom";
-import AddCircleIcon from "@mui/icons-material/AddCircle";
+import { useNavigate, useParams } from "react-router-dom";
 
 const UserDiv = styled.div`
   width: 100%;
@@ -31,11 +30,12 @@ const UserDiv = styled.div`
     border: 1px solid black;
   }
 `;
-export const User = () => {
-  const [user, setUser] = useState({
-    name: "",
-    email: "",
-    address: "",
+export const Address = () => {
+  const { id } = useParams();
+  const [address, setAddress] = useState({
+    city: "",
+    country: "",
+    pincode: "",
   });
 
   const navigate = useNavigate();
@@ -44,9 +44,9 @@ export const User = () => {
 
   const inputHandler = (e) => {
     const { name, value } = e.target;
-    setUser({ ...user, [name]: value });
+    setAddress({ ...address, [name]: value });
   };
-
+  //   console.log(id);
   //   const handler = (e) => {
   //     const { name, value } = e.target;
   //     setUser({ ...user, address: value) });
@@ -55,41 +55,46 @@ export const User = () => {
   const [data, setData] = useState();
 
   useEffect(() => {
-    axios.get(`http://localhost:3434/user`).then((data) => setData(data.data));
+    axios
+      .get(`http://localhost:3434/user/${id}/addresses`)
+      .then((data) => setData(data.data));
   }, [update]);
   console.log(data);
   return (
     <UserDiv>
       <div id="create">
-        <h1>Create user</h1>
+        <h1>Create Address</h1>
         <input
           type="text"
-          placeholder="Enter your name"
-          name="name"
+          placeholder="Enter your City name"
+          name="city"
           onChange={inputHandler}
         />
         <input
           type="text"
-          placeholder="Enter your email"
-          name="email"
+          placeholder="Enter your country Name"
+          name="country"
           onChange={inputHandler}
         />
         <input
           type="text"
-          placeholder="Enter your address"
-          name="cityName"
+          placeholder="Enter your pincode"
+          name="pincode"
           onChange={inputHandler}
         />
         <Button
           variant="contained"
           onClick={() => {
             axios
-              .post(`http://localhost:3434/user/create`, user)
-              .then((data) => alert("user is created "))
-              .then((data) => setUpdate(!update));
+              .post(
+                `http://localhost:3434/user/${id}/addresses/create`,
+                address
+              )
+              .then(alert("Address is created "))
+              .then(setUpdate(!update));
           }}
         >
-          Create User
+          Create Address
         </Button>
       </div>
       <div>
@@ -97,9 +102,9 @@ export const User = () => {
         <table width="80%">
           <thead>
             <tr>
-              <th>Name</th>
-              <th>Email</th>
-              <th>Address</th>
+              <th>CityName</th>
+              <th>Country Name</th>
+              <th>Pin Code</th>
               <th>Edit</th>
               <th>delete</th>
             </tr>
@@ -109,19 +114,14 @@ export const User = () => {
               ? data.map((e) => {
                   return (
                     <tr>
-                      <th>{e.name}</th>
-                      <th>{e.email}</th>
-                      <th>
-                        <AddCircleIcon
-                          onClick={() => {
-                            navigate(`/addresses/${e._id}`);
-                          }}
-                        />
-                      </th>
+                      <th>{e.city}</th>
+                      <th>{e.country}</th>
+                      <th>{e.pincode}</th>
                       <th>
                         <EditIcon
                           onClick={() => {
-                            navigate(`/edit/${e._id}`);
+                            console.log(id);
+                            navigate(`/editaddress/${id}`);
                           }}
                         />
                       </th>
@@ -138,6 +138,7 @@ export const User = () => {
                   );
                 })
               : ""}
+            {console.log(data)}
           </tbody>
         </table>
       </div>

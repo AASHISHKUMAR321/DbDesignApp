@@ -14,6 +14,7 @@ export const Navbar = () => {
     { name: "home", to: "/" },
     { name: "user", to: "/user" },
     { name: "products", to: "/products" },
+    { name: "Addresses", to: "/addresses" },
   ];
   return (
     <Nav>
