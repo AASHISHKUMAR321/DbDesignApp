@@ -35,7 +35,6 @@ export const User = () => {
   const [user, setUser] = useState({
     name: "",
     email: "",
-    address: "",
   });
 
   const navigate = useNavigate();
@@ -74,12 +73,7 @@ export const User = () => {
           name="email"
           onChange={inputHandler}
         />
-        <input
-          type="text"
-          placeholder="Enter your address"
-          name="cityName"
-          onChange={inputHandler}
-        />
+
         <Button
           variant="contained"
           onClick={() => {
@@ -128,9 +122,8 @@ export const User = () => {
                       <th>
                         <DeleteIcon
                           onClick={() => {
-                            axios
-                              .delete(`http://localhost:3434/user/${e.id}`)
-                              .then(setUpdate(!update));
+                            axios.delete(`http://localhost:3434/user/${e.id}`);
+                            setUpdate(!update);
                           }}
                         />
                       </th>

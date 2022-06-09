@@ -15,6 +15,7 @@ export const Navbar = () => {
     { name: "user", to: "/user" },
     { name: "products", to: "/products" },
     { name: "Addresses", to: "/addresses" },
+    { name: "Brands", to: "/brands" },
   ];
   return (
     <Nav>

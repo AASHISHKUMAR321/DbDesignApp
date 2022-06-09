@@ -7,6 +7,7 @@ import { User } from "./User";
 import { Edit } from "./Edit";
 import { Address } from "./Address";
 import { EditAddress } from "./EditAddress";
+import { Brands } from "./Brand";
 function App() {
   const [count, setCount] = useState(0);
 
@@ -16,10 +17,11 @@ function App() {
       <Routes>
         <Route path="/user" element={<User />} />
         <Route path="/addresses" element={<Address />} />
+        <Route path="/brands" element={<Brands />} />
         <Route path="/addresses/:id" element={<Address />} />
         <Route path="/" element={""} />
         <Route path="/edit/:id" element={<Edit />} />
-        <Route path="/editaddress/:id" element={<EditAddress />} />
+        <Route path="/editaddress/:id/:idx" element={<EditAddress />} />
       </Routes>
     </div>
   );

@@ -4,9 +4,10 @@ import styled from "styled-components";
 import axios from "axios";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import AddCircleIcon from "@mui/icons-material/AddCircle";
 
-const UserDiv = styled.div`
+const BrandDiv = styled.div`
   width: 100%;
   input {
     padding: 10px;
@@ -30,12 +31,10 @@ const UserDiv = styled.div`
     border: 1px solid black;
   }
 `;
-export const Address = () => {
-  const { id } = useParams();
-  const [address, setAddress] = useState({
-    city: "",
-    country: "",
-    pincode: "",
+export const Brands = () => {
+  const [brand, setbrand] = useState({
+    name: "",
+    productsId: [],
   });
 
   const navigate = useNavigate();
@@ -44,93 +43,89 @@ export const Address = () => {
 
   const inputHandler = (e) => {
     const { name, value } = e.target;
-    setAddress({ ...address, [name]: value });
+    setbrand({ ...brand, [name]: value });
   };
-  //   console.log(id);
+  const prodHandler = (e) => {
+    const { value } = e.target;
+    setbrand({ ...brand, productsId: [value] });
+  };
+  console.log(brand);
+
   //   const handler = (e) => {
   //     const { name, value } = e.target;
-  //     setUser({ ...user, address: value) });
+  //     setbrand({ ...brand, address: value) });
   //   //   };
-  //   console.log(user);
+  //   console.log(brand);
   const [data, setData] = useState();
 
   useEffect(() => {
     axios
-      .get(`http://localhost:3434/user/${id}/addresses`)
+      .get(`http://localhost:3434/brands`)
       .then((data) => setData(data.data));
   }, [update]);
   console.log(data);
   return (
-    <UserDiv>
+    <BrandDiv>
       <div id="create">
-        <h1>Create Address</h1>
+        <h1>Create Brands</h1>
         <input
           type="text"
-          placeholder="Enter your City name"
-          name="city"
+          placeholder="Enter your Brandname"
+          name="name"
           onChange={inputHandler}
         />
         <input
           type="text"
-          placeholder="Enter your country Name"
-          name="country"
-          onChange={inputHandler}
+          placeholder="Enter your Products ids"
+          name="products"
+          onChange={prodHandler}
         />
-        <input
-          type="text"
-          placeholder="Enter your pincode"
-          name="pincode"
-          onChange={inputHandler}
-        />
+
         <Button
           variant="contained"
           onClick={() => {
             axios
-              .post(
-                `http://localhost:3434/user/${id}/addresses/create`,
-                address
-              )
-              .then(alert("Address is created "))
-              .then(setUpdate(!update));
+              .post(`http://localhost:3434/brands/create`, brand)
+              .then((data) => alert("brand is created "))
+              .then((data) => setUpdate(!update));
           }}
         >
-          Create Address
+          Create Brands
         </Button>
       </div>
       <div>
-        <h1>Users</h1>
+        <h1>Brands</h1>
         <table width="80%">
           <thead>
             <tr>
-              <th>CityName</th>
-              <th>Country Name</th>
-              <th>Pin Code</th>
+              <th>Name</th>
+              <th>Products Id</th>
               <th>Edit</th>
               <th>delete</th>
             </tr>
           </thead>
           <tbody>
             {data
-              ? data.map((e, i) => {
+              ? data.map((e) => {
                   return (
                     <tr>
-                      <th>{e.city}</th>
-                      <th>{e.country}</th>
-                      <th>{e.pincode}</th>
+                      <th>{e.name}</th>
+                      <th>{e.productsId[0]}</th>
+
                       <th>
                         <EditIcon
                           onClick={() => {
-                            console.log(id);
-                            navigate(`/editaddress/${id}/${i}`);
+                            navigate(`/edit/${e._id}`);
                           }}
                         />
                       </th>
                       <th>
                         <DeleteIcon
                           onClick={() => {
-                            axios
-                              .delete(`http://localhost:3434/user/${e.id}`)
-                              .then(setUpdate(!update));
+                            axios.delete(
+                              `http://localhost:3434/brands/${e.id}`
+                            );
+                            setUpdate(!update);
                           }}
                         />
                       </th>
@@ -138,10 +133,9 @@ export const Address = () => {
                   );
                 })
               : ""}
-            {console.log(data)}
           </tbody>
         </table>
       </div>
-    </UserDiv>
+    </BrandDiv>
   );
 };

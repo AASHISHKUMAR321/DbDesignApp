@@ -31,7 +31,7 @@ const UserDiv = styled.div`
   }
 `;
 export const EditAddress = () => {
-  const { id } = useParams();
+  const { id, idx } = useParams();
   const [address, setAddress] = useState({
     city: "",
     country: "",
@@ -73,13 +73,15 @@ export const EditAddress = () => {
           variant="contained"
           onClick={() => {
             axios
-              .post(
-                `http://localhost:3434/user/${id}/addresses/create`,
+              .patch(
+                `http://localhost:3434/user/${String(
+                  id
+                )}/addresses/${idx}/edit`,
                 address
               )
-              .then(alert("Address is created "))
-              .then(setUpdate(!update));
-            navigate("/addresses");
+              .then((data) => alert("Address is updated "))
+              .then((data) => setUpdate(!update))
+              .then((data) => navigate(`/addresses/${id}`));
           }}
         >
           Update Address
