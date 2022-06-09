@@ -9,6 +9,8 @@ import { Address } from "./Address";
 import { EditAddress } from "./EditAddress";
 import { Brands } from "./Brand";
 import { BrandEdit } from "./BrandEdit";
+import { Products } from "./Products";
+import { ProductsEdit } from "./ProductsEdit";
 function App() {
   const [count, setCount] = useState(0);
 
@@ -20,6 +22,8 @@ function App() {
         <Route path="/addresses" element={<Address />} />
         <Route path="/brands" element={<Brands />} />
         <Route path="/brands/:id" element={<BrandEdit />} />
+        <Route path="/products" element={<Products />} />
+        <Route path="/products/:id" element={<ProductsEdit />} />
         <Route path="/addresses/:id" element={<Address />} />
         <Route path="/" element={""} />
         <Route path="/edit/:id" element={<Edit />} />
