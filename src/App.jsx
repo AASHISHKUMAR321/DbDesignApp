@@ -11,6 +11,8 @@ import { Brands } from "./Brand";
 import { BrandEdit } from "./BrandEdit";
 import { Products } from "./Products";
 import { ProductsEdit } from "./ProductsEdit";
+import { Category } from "./Category";
+import { CategoryEdit } from "./CategoryEdit";
 function App() {
   const [count, setCount] = useState(0);
 
@@ -24,6 +26,8 @@ function App() {
         <Route path="/brands/:id" element={<BrandEdit />} />
         <Route path="/products" element={<Products />} />
         <Route path="/products/:id" element={<ProductsEdit />} />
+        <Route path="/category" element={<Category />} />
+        <Route path="/category/:id" element={<CategoryEdit />} />
         <Route path="/addresses/:id" element={<Address />} />
         <Route path="/" element={""} />
         <Route path="/edit/:id" element={<Edit />} />

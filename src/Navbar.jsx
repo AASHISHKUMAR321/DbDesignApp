@@ -14,6 +14,7 @@ export const Navbar = () => {
     { name: "home", to: "/" },
     { name: "user", to: "/user" },
     { name: "products", to: "/products" },
+    { name: "categories", to: "/category" },
     { name: "Addresses", to: "/addresses" },
     { name: "Brands", to: "/brands" },
   ];
