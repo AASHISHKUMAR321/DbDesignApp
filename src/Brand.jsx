@@ -115,7 +115,7 @@ export const Brands = () => {
                       <th>
                         <EditIcon
                           onClick={() => {
-                            navigate(`/edit/${e._id}`);
+                            navigate(`/brands/${e._id}`);
                           }}
                         />
                       </th>

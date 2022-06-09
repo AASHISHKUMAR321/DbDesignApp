@@ -8,6 +8,7 @@ import { Edit } from "./Edit";
 import { Address } from "./Address";
 import { EditAddress } from "./EditAddress";
 import { Brands } from "./Brand";
+import { BrandEdit } from "./BrandEdit";
 function App() {
   const [count, setCount] = useState(0);
 
@@ -18,6 +19,7 @@ function App() {
         <Route path="/user" element={<User />} />
         <Route path="/addresses" element={<Address />} />
         <Route path="/brands" element={<Brands />} />
+        <Route path="/brands/:id" element={<BrandEdit />} />
         <Route path="/addresses/:id" element={<Address />} />
         <Route path="/" element={""} />
         <Route path="/edit/:id" element={<Edit />} />
